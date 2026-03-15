@@ -2,7 +2,8 @@ import os, time, csv, requests, subprocess
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 LOG_FILE = os.path.join(BASE_DIR, "pc_stats.csv")
-TEMP_ALARM = 82.0 
+CPU_TEMP_ALARM = 82.0 
+GPU_TEMP_ALARM = 82.0 
 CPU_POWER_ALARM = 150.0
 GPU_POWER_ALARM = 300.0
 last_log_time = 0
@@ -58,7 +59,7 @@ def log_alarm(data):
 def check_for_alarms(s):
     global last_log_time
     now = time.time()
-    is_spike = (s['cpu_t'] > TEMP_ALARM or s['gpu_t'] > TEMP_ALARM or 
+    is_spike = (s['cpu_t'] > CPU_TEMP_ALARM or s['gpu_t'] > GPU_TEMP_ALARM or 
                 s['cpu_w'] > CPU_POWER_ALARM or s['gpu_w'] > GPU_POWER_ALARM)
     
     if is_spike and (now - last_log_time > 1.0):
