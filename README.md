@@ -2,12 +2,12 @@
 
 A real-time hardware monitoring dashboard and alarm logger. It scrapes data from **LibreHardwareMonitor** on Windows, providing a web interface and a log that records critical hardware events.
 
-![Image of the UI](image.png)
+![Image of the UI](ui.png)
 ---
 
 ## Features
 
-- **Real-Time Dashboard**: Monitor CPU/GPU power, temperatures, and fan speeds
+- **Real-Time Dashboard**: Monitor CPU/GPU power, temperatures, fan speeds, and ram/disk utilization
 - **Intelligent Logging**: Only records data when hardware crosses "Alarm" thresholds (e.g., Temp > 82°C)
 - **Live Logs**: A dedicated log page that updates in real-time via AJAX as spikes occur
 - **Headless Architecture**: Optimized to run as a background systemd service
