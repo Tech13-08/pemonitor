@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PC Monitor</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root { --bg: #0d1117; --card: #161b22; --border: #30363d; --text: #c9d1d9; --blue: #58a6ff; --red: #ff7b72; --green: #3fb950; --orange: #d29922; }
+        body { background: var(--bg); color: var(--text); font-family: sans-serif; padding: 20px; max-width: 1200px; margin: auto; }
+        .section { margin-bottom: 25px; border: 1px solid var(--border); border-radius: 12px; padding: 15px; background: rgba(22,27,34,0.5); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; }
+        .card { background: var(--card); padding: 15px; border-radius: 8px; border: 1px solid var(--border); text-align: center; }
+        .label { font-size: 0.75em; color: #8b949e; margin-bottom: 5px; }
+        .val { font-size: 1.5em; font-weight: bold; }
+        .unit { font-size: 0.6em; color: #8b949e; margin-left: 3px; }
+        .chart-box { background: var(--card); padding: 20px; border-radius: 12px; border: 1px solid var(--border); height: 300px; }
+        .btn { display: inline-block; padding: 10px 20px; color: var(--blue); border: 1px solid var(--blue); text-decoration: none; border-radius: 6px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <div class="grid">
+            <div class="card"><div class="label">CPU Power</div><div class="val" id="cw" style="color:var(--blue)">--</div></div>
+            <div class="card"><div class="label">CPU Temp</div><div class="val" id="ct">--</div></div>
+            <div class="card"><div class="label">GPU Power</div><div class="val" id="gw" style="color:var(--red)">--</div></div>
+            <div class="card"><div class="label">GPU Temp</div><div class="val" id="gt">--</div></div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="grid">
+            <div class="card"><div class="label">Fan 1</div><div id="f1" class="val" style="color:var(--green)">--</div></div>
+            <div class="card"><div class="label">Fan 2</div><div id="f2" class="val" style="color:var(--green)">--</div></div>
+            <div class="card"><div class="label">Fan 3</div><div id="f3" class="val" style="color:var(--green)">--</div></div>
+            <div class="card"><div class="label">Fan 4</div><div id="f4" class="val" style="color:var(--green)">--</div></div>
+            <div class="card"><div class="label">Fan 5</div><div id="f5" class="val" style="color:var(--green)">--</div></div>
+        </div>
+    </div>
+    <div class="chart-box"><canvas id="powerChart"></canvas></div>
+    <center><a href="/logs" class="btn">View Alarm Logs</a></center>
+
+    <script>
+        const ctx = document.getElementById('powerChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: { labels: Array(30).fill(''), datasets: [
+                { label: 'CPU W', borderColor: '#58a6ff', data: Array(30).fill(0), tension: 0.4, pointRadius: 0 },
+                { label: 'GPU W', borderColor: '#ff7b72', data: Array(30).fill(0), tension: 0.4, pointRadius: 0 }
+            ]},
+            options: { responsive: true, maintainAspectRatio: false, animation: false, scales: { y: { beginAtZero: true, max: 300 } } }
+        });
+        async function update() {
+            try {
+                const r = await fetch('/api/data');
+                const s = await r.json();
+                document.getElementById('cw').innerText = s.cpu_w + 'W';
+                document.getElementById('ct').innerText = s.cpu_t + '°C';
+                document.getElementById('gw').innerText = s.gpu_w + 'W';
+                document.getElementById('gt').innerText = s.gpu_t + '°C';
+                document.getElementById('f1').innerText = s.f1;
+                document.getElementById('f2').innerText = s.f2;
+                document.getElementById('f3').innerText = s.f3;
+                document.getElementById('f4').innerText = s.f4;
+                document.getElementById('f5').innerText = s.f5;
+                chart.data.datasets[0].data.push(s.cpu_w); chart.data.datasets[0].data.shift();
+                chart.data.datasets[1].data.push(s.gpu_w); chart.data.datasets[1].data.shift();
+                chart.update('none');
+            } catch(e) {}
+        }
+        setInterval(update, 800);
+    </script>
+</body>
+</html>
