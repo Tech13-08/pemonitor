@@ -5,7 +5,7 @@ LOG_FILE = os.path.join(BASE_DIR, "pc_stats.csv")
 CPU_TEMP_ALARM = 82.0 
 GPU_TEMP_ALARM = 82.0 
 CPU_POWER_ALARM = 150.0
-GPU_POWER_ALARM = 300.0
+GPU_POWER_ALARM = 350.0
 last_log_time = 0
 
 def get_windows_ip():
