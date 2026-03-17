@@ -27,11 +27,9 @@
     </div>
     <div class="section">
         <div class="grid">
-            <div class="card"><div class="label">Fan 1</div><div id="f1" class="val" style="color:var(--green)">--</div></div>
-            <div class="card"><div class="label">Fan 2</div><div id="f2" class="val" style="color:var(--green)">--</div></div>
-            <div class="card"><div class="label">Fan 3</div><div id="f3" class="val" style="color:var(--green)">--</div></div>
-            <div class="card"><div class="label">Fan 4</div><div id="f4" class="val" style="color:var(--green)">--</div></div>
-            <div class="card"><div class="label">Fan 5</div><div id="f5" class="val" style="color:var(--green)">--</div></div>
+            <div class="card"><div class="label">Back CPU</div><div id="f1" class="val" style="color:var(--green)">--</div></div>
+            <div class="card"><div class="label">Case Fans</div><div id="f4" class="val" style="color:var(--green)">--</div></div>
+            <div class="card"><div class="label">Front CPU</div><div id="f5" class="val" style="color:var(--green)">--</div></div>
         </div>
     </div>
     <div class="section">
@@ -62,11 +60,9 @@
                 document.getElementById('ct').innerText = s.cpu_t + '°C';
                 document.getElementById('gw').innerText = s.gpu_w + 'W';
                 document.getElementById('gt').innerText = s.gpu_t + '°C';
-                document.getElementById('f1').innerText = s.f1;
-                document.getElementById('f2').innerText = s.f2;
-                document.getElementById('f3').innerText = s.f3;
-                document.getElementById('f4').innerText = s.f4;
-                document.getElementById('f5').innerText = s.f5;
+                document.getElementById('f1').innerText = s.f1 + " RPM";
+                document.getElementById('f4').innerText = s.f4 + " RPM";
+                document.getElementById('f5').innerText = s.f5 + " RPM";
                 document.getElementById('ram').innerText = s.ram_u + "GB";
                 document.getElementById('vram').innerText = s.vram_u + "GB";
                 document.getElementById('disk').innerText = s.disk + "%";

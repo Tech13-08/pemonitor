@@ -14,7 +14,7 @@ def get_windows_ip():
 
 def parse_sensors():
     s = {'cpu_w': 0, 'cpu_t': 0, 'gpu_w': 0, 'gpu_t': 0, 'vram_u': 0, 'ram_u': 0, 'disk': 0, 
-         'f1': 0, 'f2': 0, 'f3': 0, 'f4': 0, 'f5': 0}
+         'f1': 0, 'f4': 0, 'f5': 0}
     try:
         url = f"http://{get_windows_ip()}:8085/data.json"
         data = requests.get(url, timeout=1).json()
@@ -31,8 +31,6 @@ def parse_sensors():
             if "/gpu-amd/5/temperature/0" in sid: s['gpu_t'] = val
             if "/gpu-amd/5/smalldata/0" in sid: s['vram_u'] = round(val/1024, 2)
             if "/lpc/it8689e/0/fan/0" in sid: s['f1'] = val
-            if "/lpc/it8689e/0/fan/1" in sid: s['f2'] = val
-            if "/lpc/it8689e/0/fan/2" in sid: s['f3'] = val
             if "/lpc/it8689e/0/fan/3" in sid: s['f4'] = val
             if "/lpc/it8689e/0/fan/4" in sid: s['f5'] = val
             if "/ram/data/0" in sid: s['ram_u'] = val
