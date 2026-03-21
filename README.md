@@ -77,8 +77,8 @@ sudo systemctl enable pemonitor
 sudo systemctl start pemonitor
 ```
 
-The `pemonitor.service` file lives at `/etc/systemd/system/pemonitor.service`. Use `sudo systemctl start pemonitor` to start the service and `sudo systemctl enable pemonitor` to set it to run automatically on boot.
-If you have a cloudflare service running to utilize a quick tunnel, you can run `journalctl -u pemonitor_cftunnel.service | grep trycloudflare.com` to find that quick tunnel address assuming `pemonitor_cftunnel.service` is the name of your service.
+>The `pemonitor.service` file lives at `/etc/systemd/system/pemonitor.service`. Use `sudo systemctl start pemonitor` to start the service and `sudo systemctl enable pemonitor` to set it to run automatically on boot.
+>If you have a cloudflare service running to utilize a quick tunnel, you can run `journalctl -u pemonitor_cftunnel.service | grep trycloudflare.com` to find that quick tunnel address assuming `pemonitor_cftunnel.service` is the name of your service.
 ---
 ## Threshold Settings
 You can customize when an alarm is triggered by editing `sensors.py`. The defaults are:
