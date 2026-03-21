@@ -34,6 +34,15 @@ pemonitor/
 > ```powershell
 > Get-NetFirewallRule -DisplayName "WSL to LHM"
 > ```
+> > **Port Proxy (WSL Bridge):** To forward traffic from Windows/Tailscale to WSL, run the following in an **elevated PowerShell** window (replace the IP with your current WSL IP from `hostname -I`):
+> ```powershell
+> netsh interface portproxy add v4tov4 listenport=5000 listenaddress=0.0.0.0 connectport=5000 connectaddress=<WSL-IP>
+> ```
+> To verify:
+> ```powershell
+> netsh interface portproxy show all
+> ```
+> **Note:** WSL's IP changes on every restart. You'll need to rerun this command after reboots.
 
 ### 2. Linux/WSL Setup
 1. Clone the repository:
@@ -78,8 +87,17 @@ sudo systemctl start pemonitor
 ```
 
 >The `pemonitor.service` file lives at `/etc/systemd/system/pemonitor.service`. Use `sudo systemctl start pemonitor` to start the service and `sudo systemctl enable pemonitor` to set it to run automatically on boot.
->If you have a cloudflare service running to utilize a quick tunnel, you can run `journalctl -u pemonitor_cftunnel.service | grep trycloudflare.com` to find that quick tunnel address assuming `pemonitor_cftunnel.service` is the name of your service.
+
+
+## Remote Access (Tailscale)
+This project uses [Tailscale](https://tailscale.com) for private remote access instead of a public tunnel. Once Tailscale is installed and running on both your PC and your client device (laptop, phone, etc.), the dashboard is accessible at:
+```
+http://<tailscale-ip>:5000
+```
+No port forwarding or public exposure required. All devices must be signed into the same Tailscale account.
 ---
+
+
 ## Threshold Settings
 You can customize when an alarm is triggered by editing `sensors.py`. The defaults are:
 | Sensor    | Default Threshold |
