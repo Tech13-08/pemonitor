@@ -16,7 +16,10 @@ def parse_sensors():
     s = {'cpu_w': 0, 'cpu_t': 0, 'gpu_w': 0, 'gpu_t': 0, 'vram_u': 0, 'ram_u': 0, 'disk': 0, 
          'f1': 0, 'f4': 0, 'f5': 0}
     try:
-        url = f"http://{get_windows_ip()}:8085/data.json"
+        # This is for Docker method
+        url = "http://host.docker.internal:8085/data.json"
+        # This is for Run as a Service method
+        # url = f"http://{get_windows_ip()}:8085/data.json"
         data = requests.get(url, timeout=1).json()
         
         def walk(node):

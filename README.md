@@ -61,7 +61,9 @@ uv pip install -r requirements.txt
 > wsl --exec dbus-launch true
 > ```
 
-### 3. Run as a Service (Systemd)
+### 3. Running options
+
+#### a. Run as a Service (Systemd)
 1. Create the service file:
 ```bash
 sudo nano /etc/systemd/system/pemonitor.service
@@ -89,14 +91,34 @@ sudo systemctl start pemonitor
 >The `pemonitor.service` file lives at `/etc/systemd/system/pemonitor.service`. Use `sudo systemctl start pemonitor` to start the service and `sudo systemctl enable pemonitor` to set it to run automatically on boot.
 
 
+#### b. Deployment with Docker
+
+1. host.docker.internal for LibreHardwareMonitor access
+```python
+# In monitor.py
+url = "http://host.docker.internal:8085/data.json"
+```
+
+2. Build and Run
+```bash
+# Build the image and start the container in detached mode
+docker compose up -d --build
+```
+
+3. (Optional) Ensure persistence when not logged in to PC
+```bash
+loginctl enable-linger $USER
+```
+
 ## Remote Access (Tailscale)
 This project uses [Tailscale](https://tailscale.com) for private remote access instead of a public tunnel. Once Tailscale is installed and running on both your PC and your client device (laptop, phone, etc.), the dashboard is accessible at:
 ```
 http://<tailscale-ip>:5000
 ```
 No port forwarding or public exposure required. All devices must be signed into the same Tailscale account.
----
 
+
+---
 
 ## Threshold Settings
 You can customize when an alarm is triggered by editing `sensors.py`. The defaults are:
