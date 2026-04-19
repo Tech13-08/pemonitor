@@ -12,3 +12,20 @@ services:
       options:
         max-size: "10mb"
         max-file: "3"
+    networks:
+      - pemonitor-net
+  
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: pemonitor-tunnel
+    restart: always
+    environment:
+      - TUNNEL_TOKEN=${CF_TUNNEL_TOKEN} 
+    command: tunnel --no-autoupdate run
+    depends_on:
+      - pemonitor
+    networks:
+      - pemonitor-net
+networks:
+  pemonitor-net:
+    driver: bridge
