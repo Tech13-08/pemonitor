@@ -111,12 +111,11 @@ loginctl enable-linger $USER
 ```
 
 ## Remote Access (Tailscale)
-This project uses [Tailscale](https://tailscale.com) for private remote access instead of a public tunnel. Once Tailscale is installed and running on both your PC and your client device (laptop, phone, etc.), the dashboard is accessible at:
+This project can use [Tailscale](https://tailscale.com) for private remote access instead of a public tunnel. Once Tailscale is installed and running on both your PC and your client device (laptop, phone, etc.), the dashboard is accessible at:
 ```
 http://<tailscale-ip>:5000
 ```
 No port forwarding or public exposure required. All devices must be signed into the same Tailscale account.
-
 
 ---
 
